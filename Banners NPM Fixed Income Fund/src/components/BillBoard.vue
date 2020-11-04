@@ -16,10 +16,10 @@
             :style="
               `background-image:url(${
                 length
-                  ? require('@/assets/intro-length.jpg')
+                  ? 'intro-length.jpg'
                   : width < 500
-                  ? require('@/assets/intro-small.jpg')
-                  : require('@/assets/intro.jpg')
+                  ? 'intro-small.jpg'
+                  : 'intro.jpg'
               });background-position:center center;`
             "
           />
@@ -53,7 +53,7 @@
               :style="`padding-top:${leaderboard ? '12px' : '4px'};`"
               height="auto"
               width="150px"
-              :src="require('@/assets/logo-NLMKBPM-white.svg')"
+              :src="'logo-NLMKBPM-white.svg'"
             />
           </div>
           <div
@@ -64,7 +64,7 @@
             "
             :class="
               `col col-12 px-2 ${skyscraper ? 'mt-1' : length ? 'mt-2' : ''} ${
-                leaderboard ? 'pr-0 mt-1' : 'py-0'
+                leaderboard ? 'px-0 mt-1' : 'py-0'
               }
             `
             "
@@ -135,8 +135,12 @@
                 <button
                   :style="
                     `background-color: rgb(255, 140, 50); border-color: rgb(255, 140, 50);${
-                      width < 301 && !length ? 'height:20px;' : ''
-                    }`
+                      width < 301 && !length
+                        ? 'height:20px;'
+                        : width < 337 && !length
+                        ? 'height:34px;'
+                        : ''
+                    } ${length ? 'width:100%' : ''}`
                   "
                   :block="length"
                   class="font-weight-bold text-capitalize v-btn v-btn--contained v-btn--tile theme--dark v-size--large"
@@ -162,11 +166,10 @@
             v-if="showNav"
             class="row navwrapper ma-0"
             :style="
-              `width: ${length ? '100%' : navSize + 'px'}; padding-top: ${
-                length ? '50vh' : '0'
-              }`
+              `align-content: center;width: ${
+                length ? '100%' : navSize + 'px'
+              }; padding-top: ${length ? '50vh' : '0'}`
             "
-            align-content="center"
           >
             <div
               :class="
@@ -196,6 +199,7 @@
                     width="36"
                     height="36"
                     viewBox="0 0 24 24"
+                    style="margin-left:2px"
                     fill="none"
                     stroke="#ffffff"
                     stroke-width="2"
@@ -234,6 +238,7 @@
                 <span class="v-btn__content">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
+                    style="margin-right:2px"
                     width="36"
                     height="36"
                     viewBox="0 0 24 24"
@@ -262,35 +267,7 @@ export default {
       current: 0,
       showButton: false,
       showNav: false,
-      slides: [
-        {
-          empty: true
-        },
-        {
-          title: "7%-9% rendement op jaarbasis",
-          text: "Beleg in Private Equity via Fixed Income Participaties.",
-          image: "intro.jpg"
-        },
-        {
-          title: "Winstdeling 75% tot 85%",
-          text:
-            "Naast uw renteuitkering deelt u mee in het gerealiseerd fondsresultaat.",
-          image: "intro.jpg"
-        },
-        {
-          title: `Geen bank${this.width < 300 ? "- " : ""}financiering`,
-          text: `Hierdoor hebben het fonds en haar deelnemingen geen hoge aflossingsdruk.${
-            this.height > 90 ? "\n" : " "
-          }U komt op de eerste plaats.`,
-          image: "intro.jpg"
-        },
-        {
-          title: "Investeer gespreid in sectoren",
-          text:
-            "Focus op stabiele- en groeisectoren: IT, Digital marketing, E-commerce en Groothandel food.",
-          image: "intro.jpg"
-        }
-      ],
+      slides: [],
       button: "Meer Informatie",
       bgcolor: "rgba(255,255,255,1)",
       textcolor: "#ffffff",
@@ -316,6 +293,31 @@ export default {
       if (window.innerWidth < 301 && !this.length) {
         this.navSize = 56;
       }
+      this.slides = [
+        {
+          empty: true
+        },
+        {
+          title: "7%-9% rendement op jaarbasis",
+          text: "Beleg in Private Equity via Fixed Income Participaties."
+        },
+        {
+          title: "Winstdeling 75% tot 85%",
+          text:
+            "Naast uw renteuitkering deelt u mee in het gerealiseerd fondsresultaat."
+        },
+        {
+          title: `Geen bank${this.width < 300 ? "- " : ""}financiering`,
+          text: `Hierdoor hebben het fonds en haar deelnemingen geen hoge aflossingsdruk.${
+            this.height > 90 ? "\n" : " "
+          }U komt op de eerste plaats.`
+        },
+        {
+          title: "Investeer gespreid in sectoren",
+          text:
+            "Focus op stabiele- en groeisectoren: IT, Digital marketing, E-commerce en Groothandel food."
+        }
+      ];
     }
     this.timeout = setTimeout(() => {
       this.timer();
@@ -383,6 +385,15 @@ export default {
   margin-left: -12px;
 }
 
+.col {
+  -ms-flex-preferred-size: 0;
+  flex-basis: 0;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  max-width: 100%;
+}
+
 .col-12 {
   -webkit-box-flex: 0;
   -ms-flex: 0 0 100%;
@@ -396,21 +407,87 @@ export default {
   max-width: 50%;
 }
 
+.col-xl,
+.col-xl-auto,
+.col-xl-12,
+.col-xl-11,
+.col-xl-10,
+.col-xl-9,
+.col-xl-8,
+.col-xl-7,
+.col-xl-6,
+.col-xl-5,
+.col-xl-4,
+.col-xl-3,
+.col-xl-2,
+.col-xl-1,
+.col-lg,
+.col-lg-auto,
+.col-lg-12,
+.col-lg-11,
+.col-lg-10,
+.col-lg-9,
+.col-lg-8,
+.col-lg-7,
+.col-lg-6,
+.col-lg-5,
+.col-lg-4,
+.col-lg-3,
+.col-lg-2,
+.col-lg-1,
+.col-md,
+.col-md-auto,
+.col-md-12,
+.col-md-11,
+.col-md-10,
+.col-md-9,
+.col-md-8,
+.col-md-7,
+.col-md-6,
+.col-md-5,
+.col-md-4,
+.col-md-3,
+.col-md-2,
+.col-md-1,
+.col-sm,
+.col-sm-auto,
+.col-sm-12,
+.col-sm-11,
+.col-sm-10,
+.col-sm-9,
+.col-sm-8,
+.col-sm-7,
+.col-sm-6,
+.col-sm-5,
+.col-sm-4,
+.col-sm-3,
+.col-sm-2,
+.col-sm-1,
+.col,
+.col-auto,
+.col-12,
+.col-11,
+.col-10,
+.col-9,
+.col-8,
+.col-7,
+.col-6,
+.col-5,
+.col-4,
+.col-3,
+.col-2,
+.col-1 {
+  width: 100%;
+  padding: 12px;
+}
+
 .v-application .order-1 {
   -webkit-box-ordinal-group: 2 !important;
   -ms-flex-order: 1 !important;
   order: 1 !important;
 }
-.col {
-  -ms-flex-preferred-size: 0;
-  flex-basis: 0;
-  -webkit-box-flex: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  max-width: 100%;
-}
 
-.v-image .v-responsive {
+.v-responsive {
   position: relative;
   overflow: hidden;
   -webkit-box-flex: 1;
@@ -482,6 +559,79 @@ export default {
 .theme--dark.v-btn {
   color: #ffffff;
 }
+button,
+input,
+select,
+textarea {
+  background-color: transparent;
+  border-style: none;
+}
+button,
+html [type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+button,
+[type="button"],
+[type="reset"],
+[type="submit"],
+[role="button"] {
+  cursor: pointer;
+  color: inherit;
+}
+button,
+select {
+  text-transform: none;
+}
+button {
+  overflow: visible;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+  font: inherit;
+}
+.v-btn {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  font-weight: 500;
+  letter-spacing: 0.0892857143em;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  outline: 0;
+  position: relative;
+  text-decoration: none;
+  text-indent: 0.0892857143em;
+  text-transform: uppercase;
+  -webkit-transition-duration: 0.28s;
+  transition-duration: 0.28s;
+  -webkit-transition-property: opacity, -webkit-box-shadow, -webkit-transform;
+  transition-property: opacity, -webkit-box-shadow, -webkit-transform;
+  transition-property: box-shadow, transform, opacity;
+  transition-property: box-shadow, transform, opacity, -webkit-box-shadow,
+    -webkit-transform;
+  -webkit-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
 .v-btn:before {
   border-radius: inherit;
   bottom: 0;
@@ -521,6 +671,22 @@ export default {
 
 .v-btn > .v-btn__content .v-icon {
   color: inherit;
+}
+
+.v-btn--tile {
+  border-radius: 0;
+}
+
+.v-application .text-right {
+  text-align: right !important;
+}
+
+.v-application .text-left {
+  text-align: left !important;
+}
+
+.v-application .text-center {
+  text-align: center !important;
 }
 .v-icon.v-icon {
   -webkit-box-align: center;
